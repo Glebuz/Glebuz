@@ -16,8 +16,6 @@ import java.util.*;
         public int Finish;
         public int Weight;
         //добавлено в девелопер
-        //
-        //
         
         public Rebro (int a, int b, int c)
         {
