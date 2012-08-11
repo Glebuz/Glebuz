@@ -17,8 +17,6 @@ import java.util.*;
         public int Weight;
         
         
-        
-        
         public Rebro (int a, int b, int c)
         {
             Start = a;
