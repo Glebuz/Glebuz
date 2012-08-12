@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package graphy;
+package Shell;
 
 import java.util.*;
 import BusinessLogicLayer.*;
@@ -10,9 +10,9 @@ import BusinessLogicLayer.*;
  *
  * @author Glebuz
  */
-public class Graphy 
+public class Shell 
 {
-    private Graphy graphy = new Graphy();
+    private Shell graphy = new Shell();
     
     public static void main(String args[]) 
     { 
