@@ -11,14 +11,27 @@ import java.util.Scanner;
  * @author Glebuz
  */
 public class GetNumberOfNodes {
-    public int countOfNodes;
-    public int getNumberOfNodes ()// создаем дерево p.s. необходимо ввести кол-во
+
+    public static int countOfNodes;
+
+    static int getNumberOfNodes()// создаем дерево p.s. необходимо ввести кол-во
     {
-        System.out.println("Enter the number of nodes: ");
-        Scanner in = new Scanner(System.in);
-        countOfNodes = 3;//in.nextInt();   
+        do {
+            System.out.println("Enter the number of nodes: ");
+            Scanner in = new Scanner(System.in);
+            countOfNodes = -1;
+            try {
+                countOfNodes = in.nextInt();
+            } catch (Exception e) {
+                System.err.println("Error. You enter not a number");
+            }
+        } while (countOfNodes < 1);
         System.out.println("You entered " + countOfNodes);
         System.out.println("-----------------------------------");
+        return countOfNodes;
+    }
+
+    static int getNumberOfNodes(int i) {
         return countOfNodes;
     }
 }

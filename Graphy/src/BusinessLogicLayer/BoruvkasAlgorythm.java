@@ -8,84 +8,91 @@ package BusinessLogicLayer;
  *
  * @author Glebuz
  */
-public class BoruvkasAlgorythm extends Rebro{
+public class BoruvkasAlgorythm {
 
-    public BoruvkasAlgorythm(int startEdgeNumber, int finishEdgeNumber, int nextWay) {
-        super(startEdgeNumber, finishEdgeNumber, nextWay);
+    //private GetNumberOfNodes getNumberOfNodes = new GetNumberOfNodes();
+    private CreateTheAdjacencyMatrix createTheAdjacencyMatrix = new CreateTheAdjacencyMatrix();
+    private Rib rib = new Rib(0, 0, 0);
+
+    public BoruvkasAlgorythm() {
     }
-    
-     public String Boruvki ()
-    {
-        
+
+    public String Boruvki() {
         System.out.println("-----------------------------------");
-        int [] usedNodes = new int [countOfNodes];// массив пометок использованности вершин
-        for (int i = 0; i < countOfNodes; i++)
-        {
-            usedNodes [i] = i + 1;
+        int countOfNodes = GetNumberOfNodes.getNumberOfNodes();
+        createTheAdjacencyMatrix.createTheAdjacencyMatrix(countOfNodes);
+        int theAdjacencyMatrix[][] = createTheAdjacencyMatrix.theAdjacencyMatrix;
+        int[] usedNodes = new int[countOfNodes];// массив пометок использования вершин
+        for (int i = 0; i < countOfNodes; i++) {
+            usedNodes[i] = i + 1;
         }
-        int maxRebro = -1;
+        int maxWeight = -1;
         // найдем максимальное ребро
-        for (int i = 0; i < countOfNodes; i++)
-        {
-            for (int j = 0; j < countOfNodes; j++)
-            {
-                if (theAdjacencyMatrix[i][j] > maxRebro) maxRebro = theAdjacencyMatrix[i][j] + 1;// находим макс ребро
+        for (int i = 0; i < countOfNodes; i++) {
+            for (int j = 0; j < countOfNodes; j++) {
+                if (theAdjacencyMatrix[i][j] > maxWeight) {
+                    maxWeight = theAdjacencyMatrix[i][j] + 1;// находим макс ребро
+                }
             }
-        }        
+        }
         // цикл
         boolean contin = true;
-        int minVersh1 = -1, minVersh2 = -1;
-        while (contin == true)
-        {
+        rib.startRibNumber = -1;
+        rib.finishRibNumber = -1;
+        while (contin == true) {
             contin = false;
-            int minRebro = maxRebro;
-            for (int i = 0; i < countOfNodes; i++)
-            {
-                for (int j = i + 1; j < countOfNodes; j++)
-                {
-                    if((theAdjacencyMatrix[i][j] < minRebro) && (theAdjacencyMatrix[i][j] > 0) && (usedNodes[i] != usedNodes[j]))
-                        // если путь меньше минпути и путь существует и это не путь в самого себя
-                    {                        
-                        minRebro = theAdjacencyMatrix[i][j];//обновляем 
-                        minVersh1 = i;// запоминаем первую вершину
-                        minVersh2 = j;// запоминаем вторую вершину
-                        contin = true;// имеет смысл продолжать
+            int minWeight = maxWeight;
+            for (int i = 0; i < countOfNodes; i++) {
+                for (int j = i + 1; j < countOfNodes; j++) {
+                    if ((theAdjacencyMatrix[i][j] < minWeight)
+                            && (theAdjacencyMatrix[i][j] > 0)
+                            && (usedNodes[i] != usedNodes[j])) // если путь меньше минпути и путь существует и это не путь в самого себя
+                    {
+                        minWeight = theAdjacencyMatrix[i][j];//обновляем 
+                        rib.startRibNumber = i;// запоминаем первую вершину
+                        rib.finishRibNumber = j;// запоминаем вторую вершину
+                        contin = true;// нашли минимальный возможный путь
                     }
                 }
             }
-            if (contin == true)
+            if (contin == true)//Если нашли возможный минимальный путь
             {
-                theAdjacencyMatrix[minVersh1][minVersh2] = 0;
-                int numbComp = usedNodes[minVersh1];//запоминаем номер компоненты
-                int changedComp = usedNodes[minVersh2];// запоминаем номер компоненты
-                if (usedNodes[minVersh1] > usedNodes[minVersh2])// если если номер компоненты 1 > 2 меняем их местами
+                theAdjacencyMatrix[rib.startRibNumber][rib.finishRibNumber] = 0;
+                //помечаем путь, как использованный
+                int numbComp = usedNodes[rib.startRibNumber];
+                //запоминаем номер компоненты
+                int changedComp = usedNodes[rib.finishRibNumber];
+                // запоминаем номер компоненты
+                if (usedNodes[rib.startRibNumber] > usedNodes[rib.finishRibNumber]) 
+                // если если номер компоненты 1 > 2 меняем их местами
                 {
-                    numbComp = usedNodes[minVersh2];
-                    changedComp = usedNodes[minVersh1];
+                    numbComp = usedNodes[rib.finishRibNumber];
+                    changedComp = usedNodes[rib.startRibNumber];
                 }
-                for (int i = 0; i < countOfNodes; i++)
-                {
-                    if (usedNodes[i] == changedComp) usedNodes[i] = numbComp;//переписываем все 2-ые компоненты под первые
+                for (int i = 0; i < countOfNodes; i++) {
+                    if (usedNodes[i] == changedComp) {
+                        usedNodes[i] = numbComp;
+                        //переписываем все 2-ые компоненты под первые
+                    }
                 }
-                contin = false;// перед проверкой, что все вершины не принадлежат елинственной компоненте
-                for (int i = 0; i < countOfNodes; i++)
-                {
+                contin = false;
+                // перед проверкой, что все вершины не принадлежат елинственной компоненте
+                for (int i = 0; i < countOfNodes; i++) {
                     if (usedNodes[i] > 1)// если какой либо узел больше чем 1
                     {
                         contin = true;// имеет смысл продолжать
                         break;
                     }
                 }
-                System.out.print(minVersh1);// вывод ребра              
-                System.out.print("-");              
-                System.out.print(minVersh2);
+                System.out.print(rib.startRibNumber);// вывод ребра              
+                System.out.print("-");
+                System.out.print(rib.finishRibNumber);
                 System.out.print("; ");
-                
+
             }
-            
+
         }
         System.out.println();
         return "Boruvka's algorithm is done";
     }
-
 }
