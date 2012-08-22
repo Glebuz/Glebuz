@@ -14,7 +14,7 @@ public class GetNumberOfNodes {
 
     public static int countOfNodes;
 
-    static int getNumberOfNodes()// создаем дерево p.s. необходимо ввести кол-во
+    protected int getNumberOfNodes()// создаем дерево p.s. необходимо ввести кол-во
     {
         do {
             System.out.println("Enter the number of nodes: ");
@@ -28,10 +28,6 @@ public class GetNumberOfNodes {
         } while (countOfNodes < 1);
         System.out.println("You entered " + countOfNodes);
         System.out.println("-----------------------------------");
-        return countOfNodes;
-    }
-
-    static int getNumberOfNodes(int i) {
         return countOfNodes;
     }
 }

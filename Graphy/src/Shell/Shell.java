@@ -29,23 +29,17 @@ public class Shell {
             menu1:
             switch (choise1) {
                 case 0: {
-                    CreateTheAdjacencyMatrix createTheAdjacencyMatrix = new CreateTheAdjacencyMatrix();
-                    createTheAdjacencyMatrix.createTheAdjacencyMatrix();
                     DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
                     depthFirstSearch.depthFirstSearch();
                 }
                 break menu1;
                 case 1: {
-                    //CreateTheAdjacencyMatrix createTheAdjacencyMatrix = new CreateTheAdjacencyMatrix();
-                    //createTheAdjacencyMatrix.createTheAdjacencyMatrix();
                     BoruvkasAlgorythm boruvkasAlgorythm = new BoruvkasAlgorythm();
                     boruvkasAlgorythm.Boruvki();
                 }
                 break menu1;
                 case 2: {
-                    CreateTheAdjacencyMatrix createTheAdjacencyMatrix = new CreateTheAdjacencyMatrix();
-                    createTheAdjacencyMatrix.createTheAdjacencyMatrix();
-                    PrimsAlgorythm primsAlgorythm = new PrimsAlgorythm(choise, choise, choise);
+                    PrimsAlgorythm primsAlgorythm = new PrimsAlgorythm();
                     primsAlgorythm.Prima();
                 }
                 break menu1;

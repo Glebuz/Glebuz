@@ -13,17 +13,16 @@ import java.util.Random;
 public class CreateTheAdjacencyMatrix {
 
     //public static final GetNumberOfNodes getNumberOfNodes = new GetNumberOfNodes();
-    public static int[][] theAdjacencyMatrix;//матрица смежности
+    protected static int[][] theAdjacencyMatrix;//матрица смежности
     private static Random random = new Random();
 
-    public int[][] createTheAdjacencyMatrix(int numberOfNodes)// создаем матрицу смежности
+    protected void createTheAdjacencyMatrix(int countOfNodes)// создаем матрицу смежности
     {
-        //int numberOfNodes = GetNumberOfNodes.getNumberOfNodes(1);
         theAdjacencyMatrix =
-                new int[numberOfNodes][numberOfNodes];
-        for (int i = 0; i < numberOfNodes; i++)//цикл заполнения
+                new int[countOfNodes][countOfNodes];
+        for (int i = 0; i < countOfNodes; i++)//цикл заполнения
         {
-            for (int j = i + 1; j < numberOfNodes; j++) {
+            for (int j = i + 1; j < countOfNodes; j++) {
                 theAdjacencyMatrix[i][j] = random.nextInt(10);
                 theAdjacencyMatrix[j][i] = theAdjacencyMatrix[i][j];
                 //симметрично заполняем матрицу
@@ -31,14 +30,17 @@ public class CreateTheAdjacencyMatrix {
         }
         System.out.println("The adjacency matrix is: ");
         //вывод матрицы
-        for (int i = 0; i < numberOfNodes; i++) {
-            for (int j = 0; j < numberOfNodes; j++) {
+        for (int i = 0; i < countOfNodes; i++) {
+            for (int j = 0; j < countOfNodes; j++) {
                 System.out.print(theAdjacencyMatrix[i][j] + " ");
             }
             System.out.println();
         }
         System.out.println("Creating of adjacency matrix. Ok.");
         //уведомление о создании матрицы
+    }
+
+    protected int[][] returnTheAdjacencyMatrix() {
         return theAdjacencyMatrix;
     }
 }

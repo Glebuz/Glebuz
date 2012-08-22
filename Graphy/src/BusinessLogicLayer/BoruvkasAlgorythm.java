@@ -10,8 +10,10 @@ package BusinessLogicLayer;
  */
 public class BoruvkasAlgorythm {
 
-    //private GetNumberOfNodes getNumberOfNodes = new GetNumberOfNodes();
+    private GetNumberOfNodes getNumberOfNodes = new GetNumberOfNodes();
     private CreateTheAdjacencyMatrix createTheAdjacencyMatrix = new CreateTheAdjacencyMatrix();
+    private int countOfNodes;
+    private int[][] theAdjacencyMatrix;
     private Rib rib = new Rib(0, 0, 0);
 
     public BoruvkasAlgorythm() {
@@ -19,13 +21,14 @@ public class BoruvkasAlgorythm {
 
     public String Boruvki() {
         System.out.println("-----------------------------------");
-        int countOfNodes = GetNumberOfNodes.getNumberOfNodes();
+        countOfNodes = getNumberOfNodes.getNumberOfNodes();
         createTheAdjacencyMatrix.createTheAdjacencyMatrix(countOfNodes);
-        int theAdjacencyMatrix[][] = createTheAdjacencyMatrix.theAdjacencyMatrix;
+        theAdjacencyMatrix = CreateTheAdjacencyMatrix.theAdjacencyMatrix;
         int[] usedNodes = new int[countOfNodes];// массив пометок использования вершин
         for (int i = 0; i < countOfNodes; i++) {
             usedNodes[i] = i + 1;
         }
+        // нумеруем по порядку, начиная с 1
         int maxWeight = -1;
         // найдем максимальное ребро
         for (int i = 0; i < countOfNodes; i++) {
@@ -59,19 +62,18 @@ public class BoruvkasAlgorythm {
             {
                 theAdjacencyMatrix[rib.startRibNumber][rib.finishRibNumber] = 0;
                 //помечаем путь, как использованный
-                int numbComp = usedNodes[rib.startRibNumber];
+                int startRibNumber = usedNodes[rib.startRibNumber];
                 //запоминаем номер компоненты
-                int changedComp = usedNodes[rib.finishRibNumber];
+                int finishRibNumber = usedNodes[rib.finishRibNumber];
                 // запоминаем номер компоненты
-                if (usedNodes[rib.startRibNumber] > usedNodes[rib.finishRibNumber]) 
-                // если если номер компоненты 1 > 2 меняем их местами
+                if (usedNodes[rib.startRibNumber] > usedNodes[rib.finishRibNumber]) // если если номер компоненты 1 > 2 меняем их местами
                 {
-                    numbComp = usedNodes[rib.finishRibNumber];
-                    changedComp = usedNodes[rib.startRibNumber];
+                    startRibNumber = usedNodes[rib.finishRibNumber];
+                    finishRibNumber = usedNodes[rib.startRibNumber];
                 }
                 for (int i = 0; i < countOfNodes; i++) {
-                    if (usedNodes[i] == changedComp) {
-                        usedNodes[i] = numbComp;
+                    if (usedNodes[i] == finishRibNumber) {
+                        usedNodes[i] = startRibNumber;
                         //переписываем все 2-ые компоненты под первые
                     }
                 }
